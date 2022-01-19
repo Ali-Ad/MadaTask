@@ -1,81 +1,41 @@
-from django.shortcuts import render, get_object_or_404
-from django.http import HttpResponse,JsonResponse
-from django.core import serializers
-
-from service.models import Service
-
+from django.shortcuts import get_object_or_404
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
+from .serializers import CustomerSerializer
 from .models import Customer
 
 
-def addcustomer(request):
-    fullname= request.GET.get('fullname')
-    phonenumber =request.GET.get('phonenumber')
-    email =request.GET.get('email')
-    address = request.GET.get('address')
-    userexist =Customer.objects.filter(fullname=fullname).exists() 
-    if (userexist!=None):
-        Customer.objects.create(fullname=fullname,phonenumber=phonenumber ,email=email ,address=address)
-        return HttpResponse('customer added Successfully')
-    else:
-        return HttpResponse('customer username already exist')
+class CustomerView(APIView):
+    def get(self, request, id=None):
+        if id:
+            customer = Customer.objects.get(id=id)
+            serializer = CustomerSerializer(customer)
+            return Response({"data": serializer.data}, status=status.HTTP_200_OK)
 
+        customeres = Customer.objects.all()
+        serializer = CustomerSerializer(customeres, many=True)
+        return Response({"status": "success", "data": serializer.data}, status=status.HTTP_200_OK)
 
+    def post(self, request):
+        serializer = CustomerSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response({"status": "success", "data": serializer.data}, status=status.HTTP_200_OK)
+        else:
+            return Response({"status": "error", "data": serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
 
-def search(request):
-    fullname = request.GET.get('fullname')
-    userexist =Customer.objects.filter(fullname=fullname).exists() 
-    if(userexist!=None):
-        data = serializers.serialize('json', Customer.objects.filter(fullname=fullname))
-        return HttpResponse(data, content_type='application/json')
-    else:
-        return HttpResponse('no customer with this name ')
+    def delete(self, request, id=None):
+        customer = get_object_or_404(Customer, id=id)
+        customer.delete()
+        return Response({"status": "success", "data": "Item Deleted"})
 
-def edit(request):
-    fullname = request.GET.get('fullname')
-    newName =request.GET.get('newName')
-    newPhonenumber =request.GET.get('newPhonenumber')
-    newEmail =request.GET.get('newEmail')
-    newAddress = request.GET.get('newAddress')
-    userexist = Customer.objects.filter(fullname=fullname).exists()
-    if(userexist!=None):
-        Customer.objects.filter(fullname=fullname).update(fullname=newName,phonenumber=newPhonenumber,email=newEmail,address=newAddress)
-        return HttpResponse('Edit Successfully')
-    else:
-        return HttpResponse('no value')
+    def put(self, request, id=None):
+        customer = Customer.objects.get(id=id)
+        serializer = CustomerSerializer(customer, data=request.data, partial=True)
 
-def delete(request):
-    fullname = request.GET.get('fullname')
-    userexist =Customer.objects.filter(fullname=fullname).exists()
-    if(userexist!=False):
-        Customer.objects.filter(fullname=fullname).delete()
-        return HttpResponse('done')
-    else:
-        return HttpResponse("please enter valied username")
-
-
-def listServ(request):
-    data = serializers.serialize('json', Customer.objects.all())
-    return HttpResponse(data, content_type='application/json')
-    
-def addServ(request):
-    fullname = request.GET.get('fullname')
-    userexist =Customer.objects.filter(fullname=fullname).exists() 
-    if (userexist!=None):
-      #  Customer.objects.create(fullname=fullname,phonenumber=phonenumber ,email=email ,address=address ,)
-        return HttpResponse('customer added Successfully')
-    else:
-        return HttpResponse('customer username already exist')
-    
-
-
-
-    
-
-   
-
-    
-
-
-
-
-    
+        if serializer.is_valid():
+            serializer.save()
+            return Response({"status": "success", "data": serializer.data}, status=status.HTTP_200_OK)
+        else:
+            return Response({"status": "error", "data": serializer.errors}, status=status.HTTP_400_BAD_REQUEST)

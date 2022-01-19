@@ -1,42 +1,24 @@
-from django.shortcuts import render, get_object_or_404
-from django.http import HttpResponse
-from .models import Login
+from rest_framework.response import Response
+from rest_framework.views import APIView
+from rest_framework import status
+from employee.models import Employee
+from .serializers import EmployeeSerializer
 
-def login(request):
-    username = request.GET.get('username')
-    password = request.GET.get('password')
-    if(username!=None and password!=None):
-        user = get_object_or_404(Login,username=username , password=password)
-        if(user!=None):
-            return HttpResponse('login successfully')
+
+class EmployeeView(APIView):
+    def post(self, request):
+        serializer = EmployeeSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response({"status": "success", "data": serializer.data}, status=status.HTTP_200_OK)
         else:
-            return HttpResponse('ygh,')
-        
-def add(request):
-    username = request.GET.get('username')
-    password = request.GET.get('password')
-    userexist =Login.objects.filter(username=username).exists() 
-    if(username!=None and password!=None):
-        if(userexist==False):
-            Login.objects.create(username=username,password=password)
-            return HttpResponse('username && password added successfully')
-        return HttpResponse('username already exist')
+            return Response({"status": "error", "data": serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
 
-def update(request):
-    username = request.GET.get('username')
-    password = request.GET.get('password')
-    newpassword = request.GET.get('newpassword')
-    user = get_object_or_404(Login,username=username , password=password)
-    if(username!=None and user!=None):
-        Login.objects.update(username=username , password=newpassword)
-        return HttpResponse('password update Successfully ')
-    else:
-        return HttpResponse('username or password does not exist ')
-
-        
-
-
-
- 
-   
-
+    def patch(self, request, id=None):
+        employee = Employee.objects.get(id=id)
+        serializer = Employee(employee, data=request.data, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response({"status": "success", "data": serializer.data})
+        else:
+            return Response({"status": "error", "data": serializer.errors})
