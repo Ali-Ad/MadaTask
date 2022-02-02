@@ -1,41 +1,24 @@
-from django.shortcuts import get_object_or_404
-from rest_framework.views import APIView
-from rest_framework.response import Response
-from rest_framework import status
+from urllib import response
 from .serializers import CustomerSerializer
 from .models import Customer
+from rest_framework import mixins
+from rest_framework import generics
+from rest_framework import viewsets
+from rest_framework.response import Response
 
 
-class CustomerView(APIView):
-    def get(self, request, id=None):
-        if id:
-            customer = Customer.objects.get(id=id)
-            serializer = CustomerSerializer(customer)
-            return Response({"data": serializer.data}, status=status.HTTP_200_OK)
+class CustomerList(viewsets.ViewSet):
+    
+    def get(self, request):
+        queryset = Customer.objects.all()
+        serializer = CustomerSerializer(queryset, many=True)
+        return Response(serializer.data)
+  
+    # def post(self, request, *args, **kwargs):
+    #     return self.create(request, *args, **kwargs)
 
-        customeres = Customer.objects.all()
-        serializer = CustomerSerializer(customeres, many=True)
-        return Response({"status": "success", "data": serializer.data}, status=status.HTTP_200_OK)
-
-    def post(self, request):
-        serializer = CustomerSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response({"status": "success", "data": serializer.data}, status=status.HTTP_200_OK)
-        else:
-            return Response({"status": "error", "data": serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
-
-    def delete(self, request, id=None):
-        customer = get_object_or_404(Customer, id=id)
-        customer.delete()
-        return Response({"status": "success", "data": "Item Deleted"})
-
-    def put(self, request, id=None):
-        customer = Customer.objects.get(id=id)
-        serializer = CustomerSerializer(customer, data=request.data, partial=True)
-
-        if serializer.is_valid():
-            serializer.save()
-            return Response({"status": "success", "data": serializer.data}, status=status.HTTP_200_OK)
-        else:
-            return Response({"status": "error", "data": serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
+    # def put(self, request, *args, **kwargs):
+    #     return self.update(request, *args, **kwargs)  
+    
+    # def delete(self, request, *args, **kwargs):
+    #     return self.destroy(request, *args, **kwargs)

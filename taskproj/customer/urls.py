@@ -1,9 +1,9 @@
 from django.urls import path
 from . import views
-from .views import CustomerView
+from .views import CustomerList
 
 urlpatterns = [
 
-    path('ls', CustomerView.as_view()),
-    path('ls/<int:id>', CustomerView.as_view()),
+    path('ls', CustomerList.as_view({'get': 'list'}))
 ]
+
