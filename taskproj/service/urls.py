@@ -1,6 +1,10 @@
-from django.urls import path
-from . import views
-from .views import ServicesView
+from django.urls import path, include
+from rest_framework import routers
+from .views import Servicelist
+
+router = routers.DefaultRouter()
+router.register(r'viewset',  Servicelist,basename='services')
+
 urlpatterns = [
-    path('add' ,ServicesView.as_view ())
+    path('', include(router.urls)),
 ]

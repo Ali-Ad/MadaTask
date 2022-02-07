@@ -1,27 +1,31 @@
-from django.shortcuts import render
-from django.http import HttpResponse
+from .serializers import ServiceSerializer
 from .models import Service
 from rest_framework.response import Response
-from rest_framework.views import APIView
-from rest_framework import status
-from .serializers import ServiceSerializer
+from rest_framework.viewsets import ViewSet
+from django.shortcuts import get_object_or_404
+from django.http import HttpResponse
+
+class Servicelist(ViewSet):
+
+    def list(self, request):
+        queryset = Service.objects.all()
+        serializer = ServiceSerializer(queryset, many=True)
+        return Response(serializer.data)
 
 
-class ServicesView(APIView):
-    def get(self, request, id=None):
-        if id:
-            service = Service.objects.get(id=id)
-            serializer =ServiceSerializer(service)
-            return Response({"status": "success", "data": serializer.data}, status=status.HTTP_200_OK)
 
-        services = Service.objects.all()
-        serializer = ServiceSerializer(services, many=True)
-        return Response({"status": "success", "data": serializer.data}, status=status.HTTP_200_OK)
 
-    def post(self, request):
-        serializer = ServiceSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response({"status": "success", "data": serializer.data}, status=status.HTTP_200_OK)
-        else:
-            return Response({"status": "error", "data": serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
+    # def retrieve(self, request, pk=None):
+    #     queryset = Service.objects.all()
+    #     item = get_object_or_404(queryset, pk=pk)
+    #     serializer = ServiceSerializer(item)
+    #     return Response(serializer.data)
+    #
+    # def destroy(self, request, pk=None):
+    #     try:
+    #         item = Service.objects.get(pk=pk)
+    #     except Service.DoesNotExist:
+    #         return Response(status=404)
+    #     item.delete()
+    #     return Response(status=204)
+    #
