@@ -4,6 +4,18 @@ from rest_framework.response import Response
 from rest_framework.viewsets import ViewSet
 from django.shortcuts import get_object_or_404
 from django.http import HttpResponse
+from django.shortcuts import render
+
+from .forms import InputForm
+
+def create_view(request):
+
+    context = {}
+    form = InputForm(request.POST or None)
+    if form.is_valid():
+        form.save()
+    context['form'] = form
+    return render(request, "index.html", context)
 
 class Servicelist(ViewSet):
 

@@ -3,20 +3,33 @@ from .models import Customer
 from rest_framework.response import Response
 from rest_framework.viewsets import ViewSet
 from django.shortcuts import get_object_or_404
-from django.core.cache import cache
-from django.http import HttpResponse
-from django.shortcuts import render
+from django.views.generic.edit import CreateView
+from django.shortcuts import render ,redirect
+from .forms import InputForm
 
+def create_view(request):
 
+    context = {}
+    form = InputForm(request.POST or None)
+    if form.is_valid():
+        form.save()
+    context['form'] = form
+    return render(request, "index.html", context)
 
-
+def list_view(request):
+    context = {}
+    form = InputForm(request.POST or None)
+    if form.is_valid():
+        form.save()
+    context['form'] = form
+    return render(request, "index.html", context)
 
 class CustomerList(ViewSet):
 
     def list(self, request):
         queryset = Customer.objects.all()
         serializer = CustomerSerializer(queryset, many=True)
-        return Response(serializer.data )
+        return Response(serializer.data)
 
 
     def retrieve(self, request, pk=None):

@@ -33,6 +33,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
 
     'rest_framework',
+    'user.apps.UserConfig',
     'service.apps.ServiceConfig',
     'customer.apps.CustomerConfig',
     'employee.apps.EmployeeConfig',
@@ -42,7 +43,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    #'crispy_forms',
+    'crispy_forms',
+    'bootstrap4',
 
 ]
 
@@ -52,7 +54,7 @@ MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
-    #'django.middleware.csrf.CsrfViewMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
@@ -87,7 +89,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'hello',
         'USER': 'root',
-        'PASSWORD':'admin',
+        'PASSWORD':'1234',
         'PORT':3306,
         'HOST':'127.0.0.1',
     }
@@ -137,3 +139,4 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+CRISPY_TEMPLATE_PACK='bootstrap4'

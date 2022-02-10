@@ -5,12 +5,12 @@ from service.models import Service
 class Customer(models.Model):
 
 
-    name=models.CharField(max_length=64 , default="")
-    identity_number=models.CharField(max_length=30 , default="")
-    phone_number = models.CharField(max_length=13 , default="")
+    name=models.CharField(max_length=5 , unique=True)
+    identity_number=models.CharField(max_length=30 )
+    phone_number = models.CharField(max_length=13 )
     email = models.CharField(max_length=64)
     address = models.CharField(max_length=64)
-    location= models.CharField(max_length=64, default="")    
+    location= models.CharField(max_length=64)
 
     def __str__(self):
         return self.name
