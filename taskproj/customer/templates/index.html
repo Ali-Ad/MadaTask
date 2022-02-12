@@ -18,8 +18,8 @@
 
 	<!-- Security token -->
 	{% csrf_token %}
-
-	<div class="w-25 container h-100 w">
+    <div class="row align-items-center">
+	<div class="w-25 container h-100 ">
                 <div>
 					{{ form |crispy }}
 					<button type="submit" class="btn btn-primary">submit</button>

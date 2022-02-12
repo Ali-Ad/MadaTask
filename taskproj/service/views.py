@@ -25,19 +25,27 @@ class Servicelist(ViewSet):
         return Response(serializer.data)
 
 
+    def retrieve(self, request, pk=None):
+        queryset = Service.objects.all()
+        item = get_object_or_404(queryset, pk=pk)
+        serializer = ServiceSerializer(item)
+        return Response(serializer.data)
 
+    def destroy(self, request, pk=None):
+        try:
+            item = Service.objects.get(pk=pk)
+        except Service.DoesNotExist:
+            return Response(status=404)
+        item.delete()
+        return Response(status=204)
 
-    # def retrieve(self, request, pk=None):
-    #     queryset = Service.objects.all()
-    #     item = get_object_or_404(queryset, pk=pk)
-    #     serializer = ServiceSerializer(item)
-    #     return Response(serializer.data)
-    #
-    # def destroy(self, request, pk=None):
-    #     try:
-    #         item = Service.objects.get(pk=pk)
-    #     except Service.DoesNotExist:
-    #         return Response(status=404)
-    #     item.delete()
-    #     return Response(status=204)
-    #
+    def update(self, request, pk=None):
+        try:
+            item = Service.objects.get(pk=pk)
+        except Service.DoesNotExist:
+            return Response(status=404)
+        serializer = ServiceSerializer(item, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=400)

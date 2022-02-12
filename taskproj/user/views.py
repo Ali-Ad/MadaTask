@@ -38,3 +38,15 @@ class UserList(ViewSet):
         item.delete()
         return Response(status=204)
 
+    def update(self, request, pk=None):
+        try:
+            item = User.objects.get(pk=pk)
+        except User.DoesNotExist:
+            return Response(status=404)
+        serializer = UserSerializer(item, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=400)
+
+
