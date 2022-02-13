@@ -1,3 +1,5 @@
+from .serializers import CustomerSerializer
+from .models import Customer
 from .serializers import CustomerSerializer,CustomerServiecsSerializer
 from .models import Customer ,CustomerService
 from rest_framework.response import Response
@@ -5,7 +7,9 @@ from rest_framework.viewsets import ViewSet
 from django.shortcuts import get_object_or_404
 from django.views.generic.edit import CreateView
 from django.shortcuts import render ,redirect
-from .forms import InputForm,CustomerServicesForm
+from .forms import InputForm
+from .forms import InputForm
+
 
 def create_customer(request):
 
@@ -16,6 +20,13 @@ def create_customer(request):
     context['form'] = form
     return render(request, "index.html", context)
 
+def list_view(request):
+    context = {}
+    form = InputForm(request.POST or None)
+    if form.is_valid():
+        form.save()
+    context['form'] = form
+    return render(request, "index.html", context)
 
 class CustomerList(ViewSet):
 
@@ -96,3 +107,4 @@ class CustomerService(ViewSet):
             serializer.save()
             return Response(serializer.data)
         return Response(serializer.errors, status=400)
+

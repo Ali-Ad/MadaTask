@@ -3,8 +3,8 @@ from .models import User
 from rest_framework.response import Response
 from rest_framework.viewsets import ViewSet
 from django.shortcuts import get_object_or_404
-from django.shortcuts import render
 from .forms import InputForm
+from django.shortcuts import  render, redirect
 
 def create_view(request):
 
@@ -14,6 +14,9 @@ def create_view(request):
         form.save()
     context['form'] = form
     return render(request, "index.html", context)
+def login(request):
+    context = {}
+    form = InputForm(request.POST or None)
 
 
 class UserList(ViewSet):

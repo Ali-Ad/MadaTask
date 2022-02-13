@@ -12,7 +12,7 @@ router.register(r'viewset',  CustomerService,basename='CustomerService')
 urlpatterns = [
     path('', include(router.urls)),
     path('create', create_customer),
-    path('ee', create_views),
+
 
 
 

@@ -34,6 +34,7 @@ INSTALLED_APPS = [
 
     'rest_framework',
     'user.apps.UserConfig',
+    'members.apps.MembersConfig',
     'service.apps.ServiceConfig',
     'customer.apps.CustomerConfig',
     'employee.apps.EmployeeConfig',
@@ -45,6 +46,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'crispy_forms',
     'bootstrap4',
+
 
 ]
 
