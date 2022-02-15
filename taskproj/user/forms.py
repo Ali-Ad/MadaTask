@@ -1,11 +1,10 @@
-from django import forms
-from .models import User
+
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.models import User
 
 
-class InputForm(forms.ModelForm):
-   # is_active = forms.CheckboxInput()
 
+class CreateUserForm(UserCreationForm):
     class Meta:
-        model = User
-        fields = "__all__"
-
+        model=User
+        fields=['username','email','password1','password2']

@@ -1,5 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
 
     <title>Mada Task</title>
@@ -13,25 +12,17 @@
 
     <!--    other includes -->
 </head>
-
-<body>
 {% load crispy_forms_filters %}
 {% load bootstrap4 %}
-<form method="POST" enctype="multipart/form-data">
-
-    <!-- Security token -->
-    {% csrf_token %}
-    <div class="row align-items-center">
-        <div class="w-25 container h-100 ">
-            <div>
-                {{ form|crispy }}
-                <button type="submit" class="btn btn-primary">submit</button>
-            </div>
-        </div>
+<div class="row align-items-center">
+    <div class="w-25 container h-100 ">
+        <form method="POST" action="">
+            {% csrf_token %}
+            {{form|crispy}}
+            <button type="submit" class="btn btn-primary">submit</button>
+        </form>
     </div>
-
-
-</form>
-
-</body>
+</div>
 </html>
+
+

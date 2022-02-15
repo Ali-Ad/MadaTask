@@ -13,25 +13,26 @@
 
     <!--    other includes -->
 </head>
-
 <body>
-{% load crispy_forms_filters %}
-{% load bootstrap4 %}
-<form method="POST" enctype="multipart/form-data">
 
-    <!-- Security token -->
-    {% csrf_token %}
-    <div class="row align-items-center">
-        <div class="w-25 container h-100 ">
-            <div>
-                {{ form|crispy }}
-                <button type="submit" class="btn btn-primary">submit</button>
-            </div>
-        </div>
+{% csrf_token %}
+<div class="row align-items-center">
+
+    <div>
+        {% for each in Customer_list%}
+        <tr>
+            <td> {{each.name}}&nbsp; &nbsp;</td>
+            <td> {{each.identity_number}}&nbsp; &nbsp;</td>
+            <td> {{each.phone_number}}&nbsp; &nbsp;</td>
+            <td> {{each.email}}&nbsp; &nbsp;</td>
+            <td> {{each.address}}&nbsp; &nbsp;</td>
+            <td> {{each.location}}&nbsp; &nbsp;</td>
+        </tr>
+        <br>
+        {% endfor %}
     </div>
+</div>
 
-
-</form>
 
 </body>
 </html>

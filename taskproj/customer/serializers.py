@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Customer,CustomerService
+from .models import Customer, CustomerService
 
 
 class CustomerSerializer(serializers.ModelSerializer):
@@ -14,8 +14,8 @@ class CustomerSerializer(serializers.ModelSerializer):
         model = Customer
         fields = ('__all__')
 
-class CustomerServiecsSerializer(serializers.ModelSerializer):
 
+class CustomerServiecsSerializer(serializers.ModelSerializer):
     class Meta:
-        model=CustomerService
+        model = CustomerService
         fields = ('__all__')

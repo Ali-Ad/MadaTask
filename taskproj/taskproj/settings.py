@@ -34,10 +34,8 @@ INSTALLED_APPS = [
 
     'rest_framework',
     'user.apps.UserConfig',
-    'members.apps.MembersConfig',
     'service.apps.ServiceConfig',
     'customer.apps.CustomerConfig',
-    'employee.apps.EmployeeConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -46,6 +44,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'crispy_forms',
     'bootstrap4',
+    'django_tables2',
 
 
 ]
@@ -142,3 +141,7 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CRISPY_TEMPLATE_PACK='bootstrap4'
+
+LOGIN_REDIRECT_URL ='/account/register.html'
+
+DJANGO_TABLES2_TEMPLATE = "django_tables2/bootstrap4.html"

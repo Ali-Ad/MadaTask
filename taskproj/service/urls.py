@@ -1,11 +1,8 @@
-from django.urls import path, include
-from rest_framework import routers
+from django.urls import path
 from .views import *
 
-router = routers.DefaultRouter()
-router.register(r'viewset',  Servicelist,basename='services')
-
 urlpatterns = [
-    path('', include(router.urls)),
+
     path('create', create_view),
+    path('list', ServiceListView.as_view()),
 ]
