@@ -13,6 +13,8 @@ import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
+from django.template.context_processors import static
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
@@ -143,5 +145,11 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 CRISPY_TEMPLATE_PACK='bootstrap4'
 
 LOGIN_REDIRECT_URL ='/account/register.html'
+LOGOUT_REDIRECT_URL='/account/login.html'
 
 DJANGO_TABLES2_TEMPLATE = "django_tables2/bootstrap4.html"
+
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static'),
+]
+STATIC_ROOT = os.path.join(BASE_DIR, '.static')

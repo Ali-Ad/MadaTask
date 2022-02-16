@@ -24,9 +24,15 @@ def loginPage(request):
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
-            return redirect('register')
+            return redirect('home')
     context = {}
     return render(request, 'account/login.html', context)
+
+def logoutuser(request):
+    logout(request)
+    return redirect('login')
+def Home(request):
+    return render(request,'account/Home.html')
 
 
 class UserListView(ListView):

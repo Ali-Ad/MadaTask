@@ -5,4 +5,5 @@ from .views import *
 urlpatterns = [
     path('list/', UserListView.as_view()),
 
+
 ]

@@ -15,8 +15,12 @@ Including another URLconf
 """
 
 from django.contrib import admin
+from django.conf import settings
+
 from django.urls import path, include
 from user import views as user_view
+from django.conf.urls.static import static
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -24,7 +28,11 @@ urlpatterns = [
     path('customer/', include('customer.urls')),
     path('service/', include('service.urls')),
     path('user/', include('user.urls')),
-    path('login/', user_view.loginPage, name='login'),
+    path('', user_view.loginPage, name='login'),
+    path('logout',user_view.logoutuser, name = 'logout'),
     path('register/', user_view.register, name='register'),
+    path('home',user_view.Home,name="home"),
+
 
 ]
+
