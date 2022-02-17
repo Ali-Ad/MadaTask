@@ -14,6 +14,7 @@ from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 from django.template.context_processors import static
+from django.urls import reverse_lazy
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -144,8 +145,9 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CRISPY_TEMPLATE_PACK='bootstrap4'
 
-LOGIN_REDIRECT_URL ='/account/register.html'
-LOGOUT_REDIRECT_URL='/account/login.html'
+LOGIN_REDIRECT_URL='home'
+
+LOGOUT_REDIRECT_URL='login'
 
 DJANGO_TABLES2_TEMPLATE = "django_tables2/bootstrap4.html"
 

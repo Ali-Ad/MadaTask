@@ -1,5 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
 
     <title>Mada Task</title>
@@ -11,28 +10,40 @@
             integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW"
             crossorigin="anonymous"></script>
 
-    <!--    other includes -->
 </head>
 <body>
 
-{% csrf_token %}
-<div class="row align-items-center">
+<div class="col-md-12">
+    <div class="table-responsive">
+        <table id="bootstrapdatatable" class="table table-striped table-bordered" width="100%">
+            <thead>
+            <th>ID</th>
+            <th>name</th>
+            <th>identity_number</th>
+            <th>phone_number</th>
+            <th>email</th>
+            <th>address</th>
+            <th>location</th>
+            </thead>
+            <tbody>
+            {% for customer in Customer_list %}
+            <tr>
+                <td>{{ customer.id }}</td>
+                <td>{{ customer.name }}</td>
+                <td>{{ customer.identity_number }}</td>
+                <td>{{ customer.phone_number }}</td>
+                <td>{{ customer.email }}</td>
+                <td>{{ customer.address }}</td>
+                <td>{{ customer.location}}</td>
 
-    <div>
-        {% for each in Customer_list%}
-        <tr>
-            <td> {{each.name}}&nbsp; &nbsp;</td>
-            <td> {{each.identity_number}}&nbsp; &nbsp;</td>
-            <td> {{each.phone_number}}&nbsp; &nbsp;</td>
-            <td> {{each.email}}&nbsp; &nbsp;</td>
-            <td> {{each.address}}&nbsp; &nbsp;</td>
-            <td> {{each.location}}&nbsp; &nbsp;</td>
-        </tr>
-        <br>
-        {% endfor %}
+
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        <span><a href="/customer/create" class="btn btn-primary">Add New Embloyee</a></span>
+        <span><a href="/home" class="btn btn-primary">Home</a></span>
     </div>
 </div>
-
-
 </body>
 </html>

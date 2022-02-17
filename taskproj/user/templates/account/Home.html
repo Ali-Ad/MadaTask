@@ -7,16 +7,22 @@
 
 </head>
 <body>
+
+<form action="">
+    <input type="text" name="search" placeholder="Search by title" value="{{request.GET.title}}">
+    <input type="submit" value="Search">
+</form>
 <nav>
-    <a href="/customer/create">Add Customer </a>
+
     <br>
-    <a href="/customer/list">List all Customeres </a>
+    <a href="/customer/list">Customer Page </a>
     <br>
-    <a href="/service/create">Add Services</a>
     <br>
-    <a href="/service/list">List all Services</a>
+    <a href="/service/list">Service page </a>
+    <br>
     <br>
     <a href="/user/list">list all User</a>
+    <br>
     <br>
     <a href="/logout">logout</a>
 
