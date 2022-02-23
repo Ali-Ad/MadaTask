@@ -22,6 +22,7 @@
             <th>Price</th>
             <th>period</th>
             <th>description</th>
+            <th> IMG </th>
             </thead>
             <tbody>
             {% for service in Service_list %}
@@ -31,6 +32,9 @@
                 <td>{{ service.price }}</td>
                 <td>{{ service.period }}</td>
                 <td>{{ service.description }}</td>
+                <td><img src="/static/images/{{service.img}}" width="50" height="50"></td>
+
+
 
             </tr>
             {% endfor %}

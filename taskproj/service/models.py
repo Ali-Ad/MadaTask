@@ -6,6 +6,7 @@ class Service(models.Model):
     price = models.CharField(max_length=64 )
     period = models.CharField(max_length=64 )
     description=models.CharField(max_length=64)
+    img=models.ImageField(null=True,blank=True)
 
     def __str__(self):
         return self.name

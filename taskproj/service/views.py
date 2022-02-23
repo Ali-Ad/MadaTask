@@ -3,10 +3,14 @@ from django.views.generic import ListView
 from .models import Service
 from django.shortcuts import render, redirect
 from .forms import InputForm
+name={
+    "id" : 50,
+    "price":'ewwew'
+}
 
 @login_required
 def create_view(request):
-    context = {}
+    context = {'name':name}
     form = InputForm(request.POST or None)
     if form.is_valid():
         form.save()
