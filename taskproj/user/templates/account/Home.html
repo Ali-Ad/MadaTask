@@ -1,36 +1,65 @@
-<!DOCTYPE html>
+{% load static %}
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <title>Home</title>
-    <h1>Welcome To home page </h1>
-
+    {# Bootstrap #}
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW"
+            crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css
+">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
 </head>
+<style>
+    ul{
+    display: flex;
+    justify-content:space-around;
+    background:blue;
+    height: 2em;
+    list-style-type: none;
+    margin: auto;
+    padding: 0;
+    width: 70%;
+    text-align: center;
+    }
+
+    a{
+    text-decoration: none ;
+    color:black ;
+
+    }
+    a:hover{
+    color:white;
+    }
+    li{
+    margin-left:25px
+    }
+
+
+
+
+</style>
+
+<header>
+    <nav>
+        <ul>
+
+            <li><a href="/admin">Admin Page </a></li>
+            <li><a href="/customer/list">Customer Page </a></li>
+            <li><a href="/service/list">Service page </a></li>
+            <li><a href="/user/list">list all User</a></li>
+            <li><a href="/logout">logout</a></li>
+
+
+        </ul>
+    </nav>
+</header>
 <body>
-
-<form action="">
-    <input type="text" name="search" placeholder="Search by title" value="{{request.GET.title}}">
-    <input type="submit" value="Search">
-</form>
-<nav>
-
-    <br>
-    <br>
-    <a href="/admin">Admin Page </a>
-    <br>
-    <br>
-    <a href="/customer/list">Customer Page </a>
-    <br>
-    <br>
-    <a href="/service/list">Service page </a>
-    <br>
-    <br>
-    <a href="/user/list">list all User</a>
-    <br>
-    <br>
-    <a href="/logout">logout</a>
-
-
-</nav>
+{% block content %}
+{% endblock %}
 </body>
+
+
 </html>

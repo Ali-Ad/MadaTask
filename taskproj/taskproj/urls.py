@@ -29,7 +29,7 @@ urlpatterns = [
     path('service/', include('service.urls')),
     path('user/', include('user.urls')),
     path('', user_view.CustomLoginView.as_view(), name='login'),
-    path('logout',user_view.logoutuser, name = 'logout'),
+    path('logout',user_view.customerLogout.as_view()    , name = 'logout'),
     path('register/', user_view.register, name='register'),
     path('home',user_view.Home,name="home"),
 

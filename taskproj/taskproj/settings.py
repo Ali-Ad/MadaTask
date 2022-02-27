@@ -48,7 +48,7 @@ INSTALLED_APPS = [
     'crispy_forms',
     'bootstrap4',
     'django_tables2',
-
+    'livereload',
 
 ]
 
@@ -62,6 +62,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'livereload.middleware.LiveReloadScript',
+
 ]
 
 ROOT_URLCONF = 'taskproj.urls'
@@ -154,6 +156,8 @@ DJANGO_TABLES2_TEMPLATE = "django_tables2/bootstrap4.html"
 STATIC_URL = 'static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
+    os.path.join(BASE_DIR, 'boot'),
+
 ]
 STATIC_ROOT = os.path.join(BASE_DIR, '.static')
 
