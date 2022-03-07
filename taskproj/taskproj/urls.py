@@ -21,7 +21,6 @@ from django.urls import path, include
 from user import views as user_view
 from django.conf.urls.static import static
 
-
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/', include('django.contrib.auth.urls')),
@@ -29,10 +28,8 @@ urlpatterns = [
     path('service/', include('service.urls')),
     path('user/', include('user.urls')),
     path('', user_view.CustomLoginView.as_view(), name='login'),
-    path('logout',user_view.customerLogout.as_view()    , name = 'logout'),
+    path('logout', user_view.customerLogout.as_view(), name='logout'),
     path('register/', user_view.register, name='register'),
-    path('home',user_view.Home,name="home"),
-
+    path('home', user_view.Home, name="home"),
 
 ]
-

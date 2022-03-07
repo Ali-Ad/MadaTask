@@ -9,7 +9,7 @@
             crossorigin="anonymous"></script>
     {% load static %}
     <link rel="stylesheet" type="text/css" href="{% static '/css/style.css' %}"/>
-
+{% load bootstrap4 %}
 
 </head>
 <body>
@@ -29,9 +29,17 @@
                         <div class="form-group">
                             <label for="">Password</label>
                             <input type="password" class="form-control" name="password">
+                            <br>
+                            <a href="/user/ee" >Forget password </a>
                         </div>
+                        <div>
+                            <a href=""></a>
+                        </div>
+                        <button type="submit" class="btn signup">Log in</button>
+                        <br>
+                        <a href="/register" class="btn signup">register</a>
 
-                        <button type="submit" class="btn signup">Login</button>
+                        {% bootstrap_form_errors form layout='inline' %}
 
                     </form>
                 </div>

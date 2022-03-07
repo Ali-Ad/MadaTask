@@ -4,6 +4,8 @@ from .views import *
 
 urlpatterns = [
     path('list/', UserListView.as_view()),
-    path('about/', AboutUs.as_view())
+    path('lock/', TemplateView.as_view(template_name="account/lock.html")),
+    path('hh/',login_required(ChangePasswordView.as_view()),name="change_pass"),
+    path('ee/',ResetPassView.as_view(),name="reset"),
 
 ]

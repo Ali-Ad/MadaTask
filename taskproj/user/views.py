@@ -3,12 +3,20 @@ from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
 from .forms import CreateUserForm
 from django.views.generic import ListView
-from django.contrib.auth.views import LoginView, LogoutView
+from django.contrib.auth.views import LoginView, LogoutView, PasswordChangeView, PasswordResetView
 from django.urls import reverse_lazy
 from django.views.generic.base import TemplateView
+from django.contrib.auth import signals
+from django.http import JsonResponse, HttpResponse
+from django.utils.decorators import method_decorator
+from django.views import View
+from django.views.decorators.csrf import csrf_exempt
+
+from axes.decorators import axes_dispatch
 
 
-@login_required
+
+
 def register(request):
     form = CreateUserForm()
     if request.method == 'POST':
@@ -23,6 +31,14 @@ def register(request):
 
 class CustomLoginView(LoginView):
     template_name = 'account/login.html'
+
+
+class ChangePasswordView(PasswordChangeView):
+    template_name = 'account/changepass.html'
+    success_url = reverse_lazy('home')
+
+class ResetPassView(PasswordResetView):
+    template_name = 'account/changepass.html'
 
 
 class customerLogout(LogoutView):

@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 import os
+from datetime import timedelta
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -17,7 +18,6 @@ from django.template.context_processors import static
 from django.urls import reverse_lazy
 
 BASE_DIR = Path(__file__).resolve().parent.parent
-
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
@@ -29,7 +29,6 @@ SECRET_KEY = 'django-insecure-675p(!8-923xu7!+niy$p3)jke0e&@)_m0skw^y-=ak=rue9*^
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
 
 # Application definition
 
@@ -49,10 +48,12 @@ INSTALLED_APPS = [
     'bootstrap4',
     'django_tables2',
     'livereload',
+    'jquery',
+    'axes',
 
 ]
 
-CRISPY_TEMLATE_PACK='bootstrap4'
+CRISPY_TEMLATE_PACK = 'bootstrap4'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -63,6 +64,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'livereload.middleware.LiveReloadScript',
+    'axes.middleware.AxesMiddleware',
 
 ]
 
@@ -71,7 +73,7 @@ ROOT_URLCONF = 'taskproj.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR,'templates')],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -86,7 +88,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'taskproj.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
@@ -95,14 +96,20 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'hello',
         'USER': 'root',
-        'PASSWORD':'1234',
-        'PORT':3306,
-        'HOST':'127.0.0.1',
+        'PASSWORD': '1234',
+        'PORT': 3306,
+        'HOST': '127.0.0.1',
     }
 }
-AUTHENTICATION_BACKENDS = (
-    ('django.contrib.auth.backends.ModelBackend'),
-)
+AUTHENTICATION_BACKENDS = [
+    # AxesBackend should be the first backend in the AUTHENTICATION_BACKENDS list.
+    'axes.backends.AxesBackend',
+
+    # Django ModelBackend is the default authentication backend.
+    'django.contrib.auth.backends.ModelBackend',
+]
+
+
 
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
@@ -122,7 +129,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/4.0/topics/i18n/
 
@@ -134,10 +140,8 @@ USE_I18N = True
 
 USE_TZ = True
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
-
 
 
 # Default primary key field type
@@ -145,11 +149,11 @@ USE_TZ = True
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-CRISPY_TEMPLATE_PACK='bootstrap4'
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
-LOGIN_REDIRECT_URL='home'
-LOGIN_URL='/'
-LOGOUT_REDIRECT_URL='login'
+LOGIN_REDIRECT_URL = 'home'
+LOGIN_URL = '/'
+LOGOUT_REDIRECT_URL = 'login'
 
 DJANGO_TABLES2_TEMPLATE = "django_tables2/bootstrap4.html"
 
@@ -163,3 +167,69 @@ STATIC_ROOT = os.path.join(BASE_DIR, '.static')
 
 MEDIA_URL = 'images/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'static/images')
+
+# Default settings
+BOOTSTRAP5 = {
+
+    # The complete URL to the Bootstrap CSS file
+    # Note that a URL can be either a string,
+    # e.g. "https://stackpath.bootstrapcdn.com/bootstrap/5.1.1/css/bootstrap.min.css",
+    # or a dict like the default value below.
+    "css_url": {
+        "href": "https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css",
+        "integrity": "sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB",
+        "crossorigin": "anonymous",
+    },
+
+    # The complete URL to the Bootstrap JavaScript file
+    "javascript_url": {
+        "url": "https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js",
+        "integrity": "sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T",
+        "crossorigin": "anonymous",
+    },
+
+    # The complete URL to the Bootstrap CSS file (None means no theme)
+    "theme_url": None,
+
+    # Put JavaScript in the HEAD section of the HTML document (only relevant if you use bootstrap5.html)
+    'javascript_in_head': False,
+
+    # Label class to use in horizontal forms
+    'horizontal_label_class': 'col-md-3',
+
+    # Field class to use in horizontal forms
+    'horizontal_field_class': 'col-md-9',
+
+    # Set placeholder attributes to label if no placeholder is provided
+    'set_placeholder': True,
+
+    # Class to indicate required (better to set this in your Django form)
+    'required_css_class': '',
+
+    # Class to indicate error (better to set this in your Django form)
+    'error_css_class': 'is-invalid',
+
+    # Class to indicate success, meaning the field has valid input (better to set this in your Django form)
+    'success_css_class': 'is-valid',
+
+    # Renderers (only set these if you have studied the source and understand the inner workings)
+    'formset_renderers': {
+        'default': 'bootstrap5.renderers.FormsetRenderer',
+    },
+    'form_renderers': {
+        'default': 'bootstrap5.renderers.FormRenderer',
+    },
+    'field_renderers': {
+        'default': 'bootstrap5.renderers.FieldRenderer',
+        'inline': 'bootstrap5.renderers.InlineFieldRenderer',
+    },
+}
+AXES_LOCK_OUT_AT_FAILURE = True
+AXES_FAILURE_LIMIT = 5
+AXES_COOLOFF_TIME = timedelta(minutes=15)
+AXES_RESET_ON_SUCCESS = True
+AXES_LOCKOUT_URL = 'user/lock/'
+AXES_PROXY_COUNT = 0
+
+
+

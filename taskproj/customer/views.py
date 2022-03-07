@@ -7,7 +7,6 @@ from django.views.generic.edit import DeleteView
 from django.views.generic.edit import UpdateView
 
 
-@login_required
 def createCustomer(request):
     context = {}
     form = InputForm(request.POST or None)
